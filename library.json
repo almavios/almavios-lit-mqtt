@@ -1,0 +1,22 @@
+{
+    "name": "AlmaviosLitMqtt",
+    "keywords": "almavios, mqtt, azure, simple, iot, ethernet, esp8266",
+    "description": "This library allows you to send and receive MQTT messages from cloud services.",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/almavios/almavios-lit-mqtt"
+    },
+    "authors": {
+      "name": "Almavios",
+      "url": "https://www.almavios.com/"
+    },
+    "examples": "examples/*/*.ino",
+    "exclude": [
+      ".github"
+    ],
+    "frameworks": "arduino",
+    "platforms": [
+        "espressif"
+    ],
+    "version": "0.1.0"
+}

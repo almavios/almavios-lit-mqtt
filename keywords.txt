@@ -1,0 +1,25 @@
+###########################################
+# Syntax Coloring Map For AlmaviosLitMqtt
+###########################################
+
+###########################################
+# Datatypes (KEYWORD1)
+###########################################
+
+LitMqttApi          KEYWORD1
+LitCloudAzureApi    KEYWORD1
+
+###########################################
+# Methods and Functions (KEYWORD2)
+###########################################
+
+begin               KEYWORD2
+run                 KEYWORD2
+publish             KEYWORD2
+
+###########################################
+# Literals (LITERAL1)
+###########################################
+
+LitCloudAzure       LITERAL1
+LitMqtt             LITERAL1
