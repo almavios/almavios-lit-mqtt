@@ -50,7 +50,14 @@ void LitMqttApi::reconnect(){
             LitMqttApi::printf(" try again in 1 seconds\n");
             
             char buf[256];
-            this->esp_client.getLastSSLError(buf,256);
+
+            #ifdef ARDUINO_ARCH_ESP32
+                this->esp_client.lastError(buf,256);
+            #endif
+            #ifdef ARDUINO_ARCH_ESP8266
+                this->esp_client.getLastSSLError(buf,256);
+            #endif
+            
             LitMqttApi::printf("WiFiClientSecure SSL error: ");
             LitMqttApi::printf(buf);
             LitMqttApi::printf("\n");
@@ -78,8 +85,13 @@ void LitMqttApi::syncTime(){
         this->time_client->forceUpdate();
     }
 
-    this->esp_client.setBufferSizes(512, 512);
-    this->esp_client.setX509Time(this->time_client->getEpochTime());
+
+    // #ifdef ARDUINO_ARCH_ESP32
+    // #endif
+    #ifdef ARDUINO_ARCH_ESP8266
+        this->esp_client.setBufferSizes(512, 512);
+        this->esp_client.setX509Time(this->time_client->getEpochTime());
+    #endif
 }
 
 void LitMqttApi::callback(char* topic, byte* payload, unsigned int length){

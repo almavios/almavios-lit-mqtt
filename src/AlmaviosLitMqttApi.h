@@ -29,7 +29,7 @@
             WiFiUDP             wifi_udp;
             NTPClient           *time_client;
             PubSubClient        mqtt_client;
-            WiFiClientSecure    esp_client;
+            LIT_WIFI_CLIENT     esp_client;
             LitCloudAzureApi    *cloud_api;
             const char          *password;
             const char          *ssid;
