@@ -30,8 +30,8 @@ void LitMqttApi::connectWifi(const char* ssid, const char* password){
 
 void LitMqttApi::reconnect(){
     while(!(this->mqtt_client.connected())){
-        LitMqttApi::printf("Attempting MQTT connection\n");
-
+        LitMqttApi::printf("\nAttempting MQTT connection\n");
+        
         // Attempt to connect
         if (this->cloud_api->connect(this->mqtt_client)) {
             LitMqttApi::printf("Connected to: ");
@@ -42,11 +42,10 @@ void LitMqttApi::reconnect(){
                 this->cloud_api->getMainSubTopic().c_str()
             );
         } else {
-            char *tmp;
-            sprintf(tmp, "%d", this->mqtt_client.state());
-
+            char buf_[256];
+            sprintf(buf_, "%d", this->mqtt_client.state());
             LitMqttApi::printf("failed, rc=");
-            LitMqttApi::printf(tmp);
+            LitMqttApi::printf(buf_);
             LitMqttApi::printf(" try again in 1 seconds\n");
             
             char buf[256];
@@ -68,7 +67,7 @@ void LitMqttApi::reconnect(){
 
 void LitMqttApi::run(){
     if (!this->mqtt_client.connected()) this->reconnect();
-    this->mqtt_client.loop();
+    /*this->mqtt_client.loop();*/
 }
 
 
@@ -105,6 +104,7 @@ void LitMqttApi::callback(char* topic, byte* payload, unsigned int length){
 }
 
 
+// TODO Allow multiple arguments
 void LitMqttApi::printf(const char *str){
     Serial.printf(str);
 }
