@@ -17,6 +17,8 @@ begin               KEYWORD2
 run                 KEYWORD2
 publish             KEYWORD2
 publishCSV          KEYWORD2
+publishJSON         KEYWORD2
+printf              KEYWORD2
 
 ###########################################
 # Literals (LITERAL1)

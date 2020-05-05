@@ -1,10 +1,12 @@
 #ifndef __ALMAVIOS_LIT_MQTT_API__
 #define __ALMAVIOS_LIT_MQTT_API__
+    // FIXME Arduino does not allow over re-define with pubsub, this value is irrelevant
     #ifndef MQTT_MAX_PACKET_SIZE
-        #define MQTT_MAX_PACKET_SIZE 256
+    #define MQTT_MAX_PACKET_SIZE 512
     #endif
+
     #ifndef MQTT_KEEPALIVE
-        #define MQTT_KEEPALIVE 60
+    #define MQTT_KEEPALIVE 45
     #endif
     
     #include "Arduino.h"
@@ -38,6 +40,7 @@
             void syncTime();
 
             template<typename T> static std::string to_string(const T &value);
+            template<typename T> static std::string to_json_string(const T &value);
         public:
             LitMqttApi();
             void begin(const char* ssid, const char* password);
@@ -48,6 +51,7 @@
             static void printf(const char *str);
             template<typename T> void publish(const T &payload);
             template<typename T, size_t size> void publishCSV(const T (&attributes)[size]);
+            template<typename T, typename U, size_t size> void publishJSON(const T (&values)[size], const U(&keys)[size]);
     };
 
     #include "AlmaviosLitMqttApi.ipp"

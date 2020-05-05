@@ -114,6 +114,7 @@ void LitMqttApi::printf(const char *str){
     Serial.printf(str);
 }
 
+
 // =========================================
 // TODO Move to a utils library(to_string)
 // =========================================
@@ -150,4 +151,35 @@ template<> std::string LitMqttApi::to_string(const bool &value){
     if(value) return std::string("true");
     return std::string("false");
 }
+
+
+
+// =============================================
+// TODO Move to a utils library(to_json_string)
+// =============================================
+template<> std::string LitMqttApi::to_json_string(const float &value){
+    return LitMqttApi::to_string(value);
+}
+
+template<> std::string LitMqttApi::to_json_string(const double &value){
+    return LitMqttApi::to_string(value);
+}
+
+template<> std::string LitMqttApi::to_json_string(const int &value){
+    return LitMqttApi::to_string(value);
+}
+
+template<> std::string LitMqttApi::to_json_string(const std::string &value){
+    return "\"" + LitMqttApi::to_string(value) + "\"";
+}
+
+template<> std::string LitMqttApi::to_json_string(const String &value){
+    return "\"" + LitMqttApi::to_string(value) + "\"";
+}
+
+template<> std::string LitMqttApi::to_json_string(const bool &value){
+    return LitMqttApi::to_string(value);
+}
+
+
 
