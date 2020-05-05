@@ -12,6 +12,7 @@ This library is based on other amazing projects, for MQTT connection [PubSubClie
   * [Agnostic examples](#agnostic-examples)
     * [Basic publish](#basic-publish)
     * [CSV publish](#csv-publish)
+    * [JSON publish](#json-publish)
 * [License](#license)
 
 ## Examples
@@ -143,6 +144,25 @@ LitMqtt.publishCSV<bool,4>({0, 4, false, true});
 ```
 
 If the length does not correspond with the written number, an error can be throw be the IDE.
+
+#### JSON publish
+
+JSON is a format more complex than CSV, it is easier for humans to read and many computer languages support it. It contains plain characteres, so it is not as optimized as other solutions, the advantage is we can send data without rememering the order stablished in our cloud provider. `AlmaviosLitMqtt` has a basic support for it.
+
+There are only supported plain objects, the datatypes are the same from **publish**, they included to the keys and the values. As a note, all the keys are transformed to JSON strings. In another hand, you can use  `publishJSON()` as external or explicit.
+
+External, the arrays must be from the same size, and previous variables are required
+```C++
+float values[] = {temperature, humidity, ..., light, 50.34};
+String keys[] = {"temp_key", "humidity", ..., "light", "other"};
+LitMqtt.publishJSON(values, keys);
+```
+
+Explicit, no variables are required, but you have to provide the datatype of the values, the datatype of the keys and the lenght of the arrays(same for both of them)
+```C++
+LitMqtt.publishJSON<float, String, 4>({temperature, humidity, light, 50.34}, {"temp_key", "humidity", "light", "other"});
+```
+
 
 ## License
 [Mozilla Public License v2.0](https://github.com/almavios/almavios-lit-mqtt/blob/master/LICENSE)
