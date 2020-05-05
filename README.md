@@ -5,6 +5,7 @@ This library is based on other amazing projects, for MQTT connection [PubSubClie
 
 ## Content
 * [Content](#content)
+* [Cloud providers](#cloud-providers)
 * [Examples](#examples)
   * [Specific container setup](#specific-container-setup)
     * [ESP8266](#esp8266)
@@ -14,6 +15,10 @@ This library is based on other amazing projects, for MQTT connection [PubSubClie
     * [CSV publish](#csv-publish)
     * [JSON publish](#json-publish)
 * [License](#license)
+
+## Cloud providers
+
+* Azure (IoT Hub), using MQTT and X.509 as authentication
 
 ## Examples
 
