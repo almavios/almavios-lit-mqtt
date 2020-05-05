@@ -28,7 +28,9 @@ template<typename T, typename U, size_t size> void LitMqttApi::publishJSON(const
 
 
     while(i<size){
-        message += LitMqttApi::to_json_string(keys[i]) + ":" 
+        std::string key = LitMqttApi::to_string(keys[i]);
+        
+        message += LitMqttApi::to_json_string(key) + ":" 
                 +  LitMqttApi::to_json_string(values[i]);
         
         ++i;
