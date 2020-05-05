@@ -1,21 +1,18 @@
-#include "Providers.h"
+#include "Azure.h"
 
 LitCloudAzureApi::LitCloudAzureApi(){}
 
 void LitCloudAzureApi::begin(const char *hub_name, const char *device_id){
-    std::string hostname = std::string(hub_name) 
-                        + std::string(".azure-devices.net"); 
+    this->iot_hub_hostname = std::string(hub_name)
+                        + std::string(".azure-devices.net");
 
-    std::string helper = hostname 
-                        + std::string("/") 
-                        + std::string(device_id) 
-                        + std::string("/?api-version=2018-06-30"); 
-
+    this->iot_hub_user = this->iot_hub_hostname
+                        + std::string("/")
+                        + std::string(device_id)
+                        + std::string("/?api-version=2018-06-30");
 
     this->iot_hub_name = hub_name;
     this->iot_device_id = device_id;
-    this->iot_hub_user = helper.c_str();   
-    this->iot_hub_hostname = hostname.c_str();
 }
 
 void LitCloudAzureApi::setConnection(LIT_WIFI_CLIENT &esp, PubSubClient& mqtt, MQTT_CALLBACK_SIGNATURE){
@@ -23,6 +20,7 @@ void LitCloudAzureApi::setConnection(LIT_WIFI_CLIENT &esp, PubSubClient& mqtt, M
   mqtt.setCallback(callback);
   mqtt.setClient(esp); 
   
+  // TODO, allow "agnostic" microcontroller/development board
   #ifdef ARDUINO_ARCH_ESP32
     esp.setCertificate(this->cert);
     esp.setPrivateKey(this->key);
@@ -48,7 +46,6 @@ std::string LitCloudAzureApi::getMainPubTopic(){
   return this -> getShieldPubTopic(this->iot_device_id);
 }
 
-
 std::string LitCloudAzureApi::getShieldSubTopic(const char* topic){
   std::string helper = std::string("devices/") 
                         + std::string(topic) 
@@ -64,25 +61,14 @@ std::string LitCloudAzureApi::getShieldPubTopic(const char* topic){
 }
 
 
-
-
-
-// ===============================================================
-// ========================= ESP832 ==============================
-// ===============================================================
+// ===================================================================
+// ============================ ESP832 ===============================
+// ===================================================================
+// TODO move boards variables to another file, in favor of adding more
 #ifdef ARDUINO_ARCH_ESP32
 void LitCloudAzureApi::begin(const char *hub_name, const char *device_id, const char* cert, const char* key){
-    this->iot_hub_hostname = std::string(hub_name) 
-                        + std::string(".azure-devices.net"); 
+    this->begin(hub_name, device_id);    
 
-    this->iot_hub_user = this->iot_hub_hostname
-                        + std::string("/") 
-                        + std::string(device_id) 
-                        + std::string("/?api-version=2018-06-30");     
-
-    this->iot_hub_name = hub_name;
-    this->iot_device_id = device_id;
-    
     this->cert = cert;
     this->key = key;
 }
@@ -114,28 +100,19 @@ const char* LitCloudAzureApi::provider_cert =
 
 
 
-// ===============================================================
-// ========================= ESP8266 =============================
-// ===============================================================
+// ===================================================================
+// ============================ ESP8266 ==============================
+// ===================================================================
+// TODO move boards variables to another file, in favor of adding more
 #ifdef ARDUINO_ARCH_ESP8266
 
 void LitCloudAzureApi::begin(const char *hub_name, const char *device_id, const uint8_t* cert, size_t cert_length, const uint8_t* key, size_t key_length){
-
-    this->iot_hub_hostname = std::string(hub_name) 
-                        + std::string(".azure-devices.net"); 
-
-    this->iot_hub_user = this->iot_hub_hostname
-                        + std::string("/") 
-                        + std::string(device_id) 
-                        + std::string("/?api-version=2018-06-30");     
-
-    this->iot_hub_name = hub_name;
-    this->iot_device_id = device_id;
+  this->begin(hub_name, device_id);
     
-    this->cert = cert;
-    this->cert_length = cert_length;
-    this->key = key;
-    this->key_length = key_length;
+  this->cert = cert;
+  this->cert_length = cert_length;
+  this->key = key;
+  this->key_length = key_length;
 }
 
 // Digicert Baltimore Certificate

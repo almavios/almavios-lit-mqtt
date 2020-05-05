@@ -6,15 +6,15 @@
 long lastMsg = 0;
 
 void main(){
+    Serial.begin(115200);
     LitCloudAzure.begin( "nameofyourhub", "yourdeviceid", device_crt, device_key);
-
     LitMqtt.begin(SSID_, PASSWORD_, LitCloudAzure);
 
     while(1){
         LitMqtt.run();
 
         long now = millis();
-        if (now - lastMsg > 1200) {
+        if (now - lastMsg > 16000) {
             lastMsg = now;
             LitMqtt.publish("An important message");
         }

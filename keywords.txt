@@ -16,6 +16,7 @@ LitCloudAzureApi    KEYWORD1
 begin               KEYWORD2
 run                 KEYWORD2
 publish             KEYWORD2
+publishCSV          KEYWORD2
 
 ###########################################
 # Literals (LITERAL1)

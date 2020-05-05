@@ -8,6 +8,7 @@
     #endif
     
     #include "Arduino.h"
+    #include <cstdarg>
 
     #ifdef ARDUINO_ARCH_ESP32
         #include "WiFi.h"
@@ -21,7 +22,7 @@
     #include "vendor/NTPClient/NTPClient.h"
 
     #ifndef __ALMAVIOS_LIT_CLOUD_PROVIDERS__
-        #include "lib/providers/Providers.h"
+        #include "packages/providers/Providers.h"
     #endif
 
     struct LitMqttApi{
@@ -35,15 +36,19 @@
             const char          *ssid;
             void reconnect();
             void syncTime();
+
+            template<typename T> static std::string to_string(const T &value);
         public:
             LitMqttApi();
             void begin(const char* ssid, const char* password);
             void begin(const char* ssid, const char* password, LitCloudAzureApi &cloud_api);    
             void connectWifi(const char *ssid, const char *password);
-            void publish(const char *payload);    
-            void run();
+            void run();            
             static void callback(char* topic, byte* payload, unsigned int length);
             static void printf(const char *str);
-
+            template<typename T> void publish(const T &payload);
+            template<typename T, size_t size> void publishCSV(const T (&attributes)[size]);
     };
+
+    #include "AlmaviosLitMqttApi.ipp"
 #endif
